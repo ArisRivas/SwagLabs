@@ -1,0 +1,33 @@
+{
+  "name": "swaglabs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "docker": "docker compose run swaglabs bash && npm run docker-clear",
+    "docker-build": "docker compose build swaglabs",
+    "docker-setup": "npm install && npm run docker-build",
+    "docker-clear": "docker compose down --remove-orphans && echo 'deleted the test result folder' && rm -rf ./testsResults ",
+    "docker-all-tests": "docker compose run --name wdio_container swaglabs npm run test",
+    "test": "wdio wdio.conf.js",
+    "wdio": "wdio run ./wdio.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArisRivas/swaglabs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url":"https://github.com/ArisRivas/swaglabs/issues"
+  },
+  "homepage": "https://github.com/ArisRivas/swaglabs#readme",
+  "devDependencies": {
+    "@wdio/cli": "^8.36.1",
+    "@wdio/cucumber-framework": "^8.36.1",
+    "@wdio/local-runner": "^8.36.1",
+    "@wdio/spec-reporter": "^8.36.1",
+    "wdio-docker-service": "^3.2.1"
+  }
+}

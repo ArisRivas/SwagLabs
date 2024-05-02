@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  selenium-hub:
+    image: selenium/hub:4.17
+    container_name: selenium-hub
+    ports:
+      - '4442:4442'
+      - '4443:4443'
+      - '4444:4444'
+
+  firefox-node:
+    image: selenium/node-firefox:4.17
+    shm_size: '2gb'
+    depends_on:
+      - selenium-hub
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - VNC_NO_PASSWORD=2
+      - SE_NODE_MAX_SESSIONS=4
+
+  chrome-node:
+    image: selenium/node-chrome:4.17
+    shm_size: '2gb'
+    depends_on:
+      - selenium-hub
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - VNC_NO_PASSWORD=2
+      - SE_NODE_MAX_SESSIONS=4
+
+  swaglabs:
+    container_name: wdio_container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - firefox-node
+      - chrome-node
+    volumes:
+      - ./:/wdio
+    links:
+      - selenium-hub
+    environment:
+      - BASEURL=http://localhost
+      - HOSTNAME=selenium-hub
+      - PORT=4444
+      - PATHORIGIN=/
+    command: npm start 
