@@ -1,12 +1,5 @@
 name: SwagLabs
-on:
-  workflow_dispatch:
-    inputs:
-      centrosTarget:
-        required: true
-        default: https://www.saucedemo.com/
-        type: string
-
+on: [push, pull_request]
 jobs:
   centros-ui-tests:
     runs-on: ubuntu-latest
