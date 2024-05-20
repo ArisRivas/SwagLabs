@@ -11,26 +11,15 @@ jobs:
   centros-ui-tests:
     runs-on: ubuntu-latest
     name: Running e2e tests
-
+    timeout-minutes: 5
     steps:
       - name: Code Checkout
         uses: actions/checkout@v4
-
-       
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'
-        
-
-      - name: Install dependencies
-        run: npm install
-        
-        
+   
 
       - name: Run tests
-        run: npm test
+        run: npm run docker
        
-
+      - name: clear docker
+        run: docker compose down --remove-orphans
 

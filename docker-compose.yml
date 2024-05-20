@@ -54,4 +54,4 @@ services:
       - HOSTNAME=selenium-hub
       - PORT=4444
       - PATHORIGIN=/
-    command: npm start 
+    command: npm run test
