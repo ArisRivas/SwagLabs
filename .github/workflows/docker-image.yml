@@ -1,0 +1,30 @@
+name: Swaglabs tests automated run
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    types: [opened, reopened]
+  workflow_dispatch:
+    inputs:
+      centrosTarget:
+        required: true
+        default: https://www.saucedemo.com/
+        type: string
+      suiteToRun:
+        description: |
+          'if is empty automatically will run all the test'
+        type: string
+
+jobs:
+ ui-tests:
+    runs-on: ubuntu-latest
+    name: Running e2e tests
+  
+
+   
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
