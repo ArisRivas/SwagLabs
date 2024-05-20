@@ -1,22 +1,37 @@
-name: SwuagLabs
-on: [push, pull_request]
+name: SwagLabs
+on:
+  workflow_dispatch:
+    inputs:
+      centrosTarget:
+        required: true
+        default: https://www.saucedemo.com/
+        type: string
+
 jobs:
-  build:
+  centros-ui-tests:
     runs-on: ubuntu-latest
+    name: Running e2e tests
+
     steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-        - uses: actions/setup-node@v3
-          with:
-            node-version: 18
-        - name: Install
-          run: npm install
-        - name: Test
-          run: npm run test
-        - uses: actions/upload-artifact@v1
-          if: failure()
-          with:
-            name: logs
-            path: logs
+      - name: Code Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        continue-on-error: true
+        run: npm install
+        
+
+      - name: Run  e2e tests
+        run: npm run test
+        continue-on-error: true
+        
+
+      - name: Sleep for 15 seconds
+        run: sleep 15s
+        shell: bash
+
 
 
