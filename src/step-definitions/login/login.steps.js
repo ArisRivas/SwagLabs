@@ -15,6 +15,7 @@ When(/^I login with (\w+) and (.+)$/, async (username, password) => {
     await LoginPage.login(username, password)
 });
 
-
-
+Then('I should see the products page', async () => {
+    await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html');
+});
 
