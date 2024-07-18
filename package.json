@@ -10,8 +10,10 @@
     "docker-clear": "docker compose down --remove-orphans && echo 'deleted the test result folder' && rm -rf ./testsResults ",
     "docker-all-tests": "docker compose run --name wdio_container swaglabs npm run test",
     "test": "wdio wdio.conf.js",
-    "wdio": "wdio run ./wdio.conf.js"
+    "wdio": "wdio run ./wdio.conf.js",
+    "api": "nodemon ./api/app.js"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ArisRivas/swaglabs.git"
@@ -30,5 +32,9 @@
     "@wdio/local-runner": "^8.36.1",
     "@wdio/spec-reporter": "^8.36.1",
     "wdio-docker-service": "^3.2.1"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.4"
   }
 }
